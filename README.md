@@ -21,20 +21,7 @@ benchmarking against GIAB GRCh38 v4.1 benchmark using v2.0 stratifications.
 --------------------
 DATA & FILE OVERVIEW
 --------------------
-### Assemblies
-- Directory `assemblies/` contains information on the assemblies that were evaluated along with md5 checksums for assembly files that were benchmarked.
-
-### Dipcall source code
-- Directory `src/` contains source code for Dipcall
-
-### Benchmarking Results
-- Directory `summary_metrics_from_R/` contains the following:
-
-- Benchmarking summary results (`*V4.1_results.extended.csv`) from hap.py are located in `summary_metrics_from_R/ext_results_for_R/`
-
-- `dipcall_10kbAND50kb_happy312_with_gap2homvarbutfiltered_target_regions.csv` contains the benchmarking summary      metrics for all assemblies.  Note only results with field "dipcall_contig" = 10 used for HPRC assembly evaluation. "dipcall_contig" = 50 was used in evaluating parameters for snakemake pipeline.  The summary csv file was generated in R using Rscript `HPRC-Assembly_Benchmarking_with_TargetRegions-Compare_two_benchmark_runs.R`
-
-### Other files
+### Files required for running Snakemake pipelines
 - Snakefiles for Snakemake pipeline runs:
 
   - with target-regions : `Snakefile_Singularity_noIntersection_dipcall10kb_happy312_with_gap2homvarbutfiltered_AND_target_regions`
@@ -43,7 +30,20 @@ DATA & FILE OVERVIEW
 
 - configuration file for snakemake pipelines : `config.yaml`
 
+- Directory `envs/` contains conda environment yamls for tools
+
 - sample file for snakemake pipelines containing paths to assemblies : `samples_all.tsv`
+
+- Directory `src/` contains source code for Dipcall- Directory `assemblies/` contains information on the assemblies that were evaluated along with md5 checksums for assembly files that were benchmarked.
+
+- Directory `assemblies/` contains information on the assemblies that were evaluated along with md5 checksums for assembly files that were benchmarked.
+
+### Benchmarking Results
+- Directory `summary_metrics_from_R/` contains the following:
+
+- Benchmarking summary results (`*V4.1_results.extended.csv`) from hap.py are located in `summary_metrics_from_R/ext_results_for_R/`
+
+- `dipcall_10kbAND50kb_happy312_with_gap2homvarbutfiltered_target_regions.csv` contains the benchmarking summary      metrics for all assemblies.  Note only results with field "dipcall_contig" = 10 used for HPRC assembly evaluation. "dipcall_contig" = 50 was used in evaluating parameters for snakemake pipeline.  The summary csv file was generated in R using Rscript `HPRC-Assembly_Benchmarking_with_TargetRegions-Compare_two_benchmark_runs.R`
 
 --------------------------
 METHODOLOGICAL INFORMATION
