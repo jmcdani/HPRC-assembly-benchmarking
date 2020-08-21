@@ -17,7 +17,7 @@ The GIAB Assembly Benchmarking Pipeline provides a pipeline for benchmarking HPR
 genome assemblies using Dipcall for variant calling against GRCh38 and hap.py for 
 benchmarking against GIAB GRCh38 v4.1 benchmark using v2.0 stratifications.
 
-![Benchmarking Summary](HPRC-Assembly-Benchmarking-Summary of NIST.png)
+![Benchmarking Summary](HPRC-Assembly-Benchmarking-Summary.png)
 --------------------------
 SHARING/ACCESS INFORMATION
 --------------------------
