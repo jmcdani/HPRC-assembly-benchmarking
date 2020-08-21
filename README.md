@@ -62,7 +62,7 @@ Hard Regions metrics were calculated for particularly difficult-to-assemble regi
 
 ## Snakemake Pipeline Information
 
-To generate benchmarking results two snakemake pipelines were run 1) with hap.py using target-regions and 2) without hap.py target-regions. The pipelines assume genome HG002, GRCh38 reference and associated GIAB v4.1 benchmarks and v2.0 stratifications. The pipelines automate running of assemblies through variant calling with Dipcall and benchmarking using hap.py v.0.3.12
+To generate benchmarking results two snakemake pipelines were run 1) with hap.py using target-regions = .dip.bed from Dipcall output and 2) without hap.py target-regions. The pipelines assume genome HG002, GRCh38 reference and associated GIAB v4.1 benchmarks and v2.0 stratifications. The pipelines automate running of assemblies through variant calling with Dipcall and benchmarking using hap.py v.0.3.12
 
 ### Pipeline Dependencies
 - Snakemake >v5.5.2
