@@ -25,14 +25,23 @@ SHARING/ACCESS INFORMATION
 --------------------
 DATA & FILE OVERVIEW
 --------------------
+`assemblies\`
+Directory contains information on the assemblies assemblies that were benchmarked along with md5 checksums for assembly files that were benchmarked.
 
+`src\`
+Binaries for Dipcall
 
+`summary_metrics_from_R\`
+
+Benchmarking summary results (*V4.1_results.extended.csv) from hap.py are located in `summary_metrics_from_R/ext_results_for_R/`
+
+`dipcall_10kbAND50kb_happy312_with_gap2homvarbutfiltered_target_regions.csv` contains the benchmarking summary metrics for all assemblies.  Note only results with field dipcall_contig = 10 used for HPRC assembly evaluation. Dipcall_contig = 50 was used in evaluating parameters for snakemake pipeline.  The summary csv file was generated in R using Rscript `HPRC-Assembly_Benchmarking_with_TargetRegions-Compare_two_benchmark_runs.R`
 
 --------------------------
 METHODOLOGICAL INFORMATION
 --------------------------
 
-1) Dependencies
+## Dependencies
     - Snakemake >v5.5.2
     - Docker
     - docker container "docker://jmcdani20/hap.py:v0.3.12"
@@ -40,15 +49,12 @@ METHODOLOGICAL INFORMATION
       https://github.com/Illumina/hap.py/releases
     - Dipcall found in src directory
     - GIAB GRCh38 Benchmark v4.1 files from:
-	  ftp://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/release/AshkenazimTrio/HG002_NA24385_son/latest/GRCh37/HG002_GRCh37_1_22_v4.1_draft_benchmark.vcf.gz"
-	  ftp://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/release/AshkenazimTrio/HG002_NA24385_son/latest/GRCh37/HG002_GRCh37_1_22_v4.1_draft_benchmark.vcf.gz.tbi"
-	  ftp://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/release/AshkenazimTrio/HG002_NA24385_son/latest/GRCh37/HG002_GRCh37_1_22_v4.1_draft_benchmark.bed.gz"
-	  ftp://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/release/AshkenazimTrio/HG002_NA24385_son/latest/GRCh37/HG002_GRCh37_1_22_v4.1_draft_benchmark.bed.gz.tbi"
-	- GIAB GCh38 v2.0 Stratification files from 
-	  ftp://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/release/genome-stratifications/v2.0/GRCh38/      
+	  ftp://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/release/AshkenazimTrio/HG002_NA24385_son/latest/GRCh38/HG002_GRCh38_1_22_v4.1_draft_benchmark.vcf.gz
+    ftp://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/release/AshkenazimTrio/HG002_NA24385_son/latest/GRCh38/HG002_GRCh38_1_22_v4.1_draft_benchmark.vcf.gz.tbi
+    ftp://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/release/AshkenazimTrio/HG002_NA24385_son/latest/GRCh38/HG002_GRCh38_1_22_v4.1_draft_benchmark.bed.gz
+    ftp://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/release/AshkenazimTrio/HG002_NA24385_son/latest/GRCh38/HG002_GRCh38_1_22_v4.1_draft_benchmark.bed.gz.tbi
 
-
-2) Two pipelines were run  
+2) Two pipelines were run 
 Pipeline retrieves the following 
     - GRCh38 reference fasta (see config.yaml for ftp)
 
