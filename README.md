@@ -94,4 +94,5 @@ To generate benchmarking results two snakemake pipelines were run 1) with hap.py
   ftp://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/release/AshkenazimTrio/HG002_NA24385_son/latest/GRCh38/HG002_GRCh38_1_22_v4.1_draft_benchmark.bed.gz.tbi
 
 - GIAB GRCh38 v2.0 stratifications
+
 ftp://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/release/genome-stratifications/v2.0/GRCh38/
