@@ -15,8 +15,9 @@ SUMMARY
 
 The GIAB Assembly Benchmarking Pipeline provides a pipeline for benchmarking HPRC HG002 
 genome assemblies using Dipcall for variant calling against GRCh38 and hap.py for 
-benchmarking against GIAB GRCh38 v4.1 benchmark and v2.0 stratifications.
+benchmarking against GIAB GRCh38 v4.1 benchmark using v2.0 stratifications.
 
+![Benchmarking Summary](HPRC-Assembly-Benchmarking-Summary of NIST.png)
 --------------------------
 SHARING/ACCESS INFORMATION
 --------------------------
@@ -47,10 +48,11 @@ METHODOLOGICAL INFORMATION
 	  ftp://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/release/genome-stratifications/v2.0/GRCh38/      
 
 
-2) Pipeline retrieves the following 
-    - reference fasta, GRCh38 (see config.yaml for ftp)
+2) Two pipelines were run  
+Pipeline retrieves the following 
+    - GRCh38 reference fasta (see config.yaml for ftp)
 
-3) Dipcall in "src" directory (https://github.com/lh3/dipcall) 
+3) Dipcall in "src" directory. Dipcall source code reterieved from https://github.com/lh3/dipcall
     - uses docker container for k8 binaries
     - Dipcall file LN 40 modified (my $mm2_opt = q/-xasm5 -z200000,10000 --cs -r2k -t$(N_THREADS)/;) 
       for better mapping to MHC, all other parameters are original default parameters for Dipcall.
