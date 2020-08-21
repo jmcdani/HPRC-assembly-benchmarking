@@ -95,4 +95,4 @@ To generate benchmarking results two snakemake pipelines were run 1) with hap.py
 
 - GIAB GRCh38 v2.0 stratifications
 
-ftp://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/release/genome-stratifications/v2.0/GRCh38/
+  ftp://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/release/genome-stratifications/v2.0/GRCh38/
