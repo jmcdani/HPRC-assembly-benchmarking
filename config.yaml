@@ -1,0 +1,30 @@
+#sample table
+assemblies: samples.tsv
+
+## Reference Genome
+ref:
+  id: GRCh38
+  genome: data/ref/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz
+  url: ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz
+  md5: a08035b6a6e31780e96a34008ff21bd6
+
+## directory to write output to
+output: "output/"
+
+#### Pipeline tool dependency files
+## dipcall
+par: "src/dipcall.kit/hs38.PAR.bed"
+gender: "male"
+
+## Benchmark set
+benchmarkset:
+  id: "V4.1"
+  vcf: /Users/jmcdani/Documents/GiaB/Benchmarking/assembly-benchmarking/hpp/benchmark/HG002_GRCh38_1_22_v4.1_draft_benchmark.vcf.gz
+  md5_bench_vcf: 50a393142c4dd74a3b0ab945f2ee221e
+  bed: /Users/jmcdani/Documents/GiaB/Benchmarking/assembly-benchmarking/hpp/benchmark/HG002_GRCh38_1_22_v4.1_draft_benchmark.bed
+  md5_bench_bed: 9cdac068344ff2b590aaed08df3af096
+  
+stratifications:
+#see b38.md5 for stratification md5s  
+  dir: /Users/jmcdani/Documents/GiaB/Benchmarking/assembly-benchmarking/hpp/genome-stratifications/GRCh38
+  tsv: /Users/jmcdani/Documents/GiaB/Benchmarking/assembly-benchmarking/hpp/genome-stratifications/GRCh38/v2.0-GRCh38-stratifications.tsv

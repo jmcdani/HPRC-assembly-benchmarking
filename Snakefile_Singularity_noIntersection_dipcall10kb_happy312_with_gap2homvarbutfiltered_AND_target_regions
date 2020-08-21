@@ -1,0 +1,175 @@
+## Snakefile_Singularity_noIntersection_dipcall10kb_happy312_with_gap2homvarbutfiltered_AND_target_regions
+## Snakefile 1) DOES use singularity 2) DOES NOT do intersection of dip.vcf and dip.bed for input into hap.py 
+## 3) use of docker container hap.py_docker:v.0.3.12 4) Heng Li 10kb and Chai dipcall params
+## 5) use dip.gap2homvarbutfiltered.vcf.gz as hap.py input and target-regions = dip.bed
+
+## Import dependencies
+import pandas as pd
+from snakemake.utils import min_version
+from snakemake.remote.FTP import RemoteProvider as FTPRemoteProvider
+
+## set minimum snakemake version
+min_version("5.5.2")
+
+## File download
+FTP = FTPRemoteProvider()
+
+## Loading config file and sample sheet
+configfile: "config.yaml"
+
+## Read table of samples and set wildcard prefix and constraints
+asm = pd.read_table(config["assemblies"]).set_index(["prefix"], drop = False)
+ASM_prefix = list(set(asm["prefix"]))
+
+wildcard_constraints:
+    prefix="|".join(ASM_prefix)
+
+outdir = config["output"]
+
+rule all: 
+    input: 
+        expand(outdir + "{prefix}.mak", prefix = ASM_prefix), #for use with dipcall_makefile rule
+        expand(outdir + "{prefix}.dip.vcf.gz", prefix = ASM_prefix),
+        expand(outdir + "{prefix}.dip.bed", prefix = ASM_prefix),
+        expand(outdir + "{prefix}.dip.gap2homvarbutfiltered.vcf.gz", prefix = ASM_prefix),
+        #expand(outdir + "{prefix}.hap1.bam", prefix = ASM_prefix),
+        #expand(outdir + "{prefix}.hap2.bam", prefix = ASM_prefix),
+        expand(outdir + "{prefix}_" + config["benchmarkset"]["id"] + "_results.vcf.gz", prefix = ASM_prefix)
+
+################################################################################
+## Functions to get assembly haplotype paths
+################################################################################
+def get_hap1(wildcards):
+    path=asm.loc[(wildcards.prefix), "h1"]
+    return(path)
+
+def get_hap2(wildcards):
+    path = asm.loc[(wildcards.prefix), "h2"]
+    return(path)
+   
+################################################################################
+## Get and prepare reference files
+################################################################################
+rule get_ref:
+    input: FTP.remote(config["ref"]["url"])
+    output: "resources/" + config["ref"]["id"] + ".fa"
+    shell: "gunzip -c {input} > {output}"
+
+rule index_ref:
+    input: rules.get_ref.output
+    output: "resources/" + config["ref"]["id"] + ".fa.fai"
+    conda: "envs/samtools.yaml"
+    shell: "samtools faidx {input}"
+
+################################################################################
+## Call and benchmark variants
+################################################################################
+
+rule dipcall_makefile:
+    input:
+        h1=get_hap1,
+        h2=get_hap2,
+        ref=rules.get_ref.output,
+        refidx=rules.index_ref.output,
+        par=config["par"]
+    output: outdir + "{prefix}.mak"
+    params: prefix= outdir + "{prefix}"
+    shell: """
+        H1=$(basename {input.h1})
+        H2=$(basename {input.h2})
+        WD=$(pwd)
+        ASMDIR1=$WD/$(dirname {input.h1})
+        ASMDIR2=$WD/$(dirname {input.h2})
+        
+        echo $H1
+        echo $ASMDIR1
+        echo $ASMDIR2
+        echo $H2
+        
+        docker run -it \
+            -v $(pwd):/data \
+            -v $ASMDIR1:/assem1 \
+            -v $ASMDIR2:/assem2 \
+            hap.py_docker:v0.3.12 /data/src/dipcall.kit/run-dipcall \
+                    -x /data/{input.par} \
+                    /data/{params.prefix} \
+                    /data/{input.ref} \
+                    /assem1/$H1 \
+                    /assem2/$H2 \
+                    > {output}
+    """
+
+rule run_dipcall:
+    input: 
+        h1=get_hap1,
+        h2=get_hap2,
+        make=outdir + "{prefix}.mak" 
+    output: 
+        vcf=outdir + "{prefix}.dip.vcf.gz",
+        bed=outdir + "{prefix}.dip.bed",
+        #bam1=outdir + "{prefix}.hap1.bam",
+        #bam2=outdir + "{prefix}.hap2.bam"
+
+    shell: """
+        date
+        H1=$(basename {input.h1})
+        H2=$(basename {input.h2})
+        WD=$(pwd)
+        ASMDIR1=$WD/$(dirname {input.h1})
+        ASMDIR2=$WD/$(dirname {input.h2})
+
+        docker run -it \
+            -v $(pwd):/data \
+            -v $ASMDIR1:/assem1 \
+            -v $ASMDIR2:/assem2 \
+            hap.py_docker:v0.3.12 make -j1 -f /data/{input.make}
+        date
+    """
+
+rule dip_gap2homvarbutfiltered:
+    input: 
+        vcf=outdir + "{prefix}.dip.vcf.gz"
+    output: outdir + "{prefix}.dip.gap2homvarbutfiltered.vcf.gz"
+    shell: "gunzip -c {input.vcf} |\
+        sed 's/1|\./1|1/' |\
+        grep -v 'HET\|GAP1\|DIP' |\
+        bgzip -c > {output}"
+
+rule run_happy_v312_with_target_regions:
+    input:
+        vcf=outdir + "{prefix}.dip.gap2homvarbutfiltered.vcf.gz",
+        bed=outdir + "{prefix}.dip.bed",
+        bench_vcf=config["benchmarkset"]["vcf"],
+        bench_bed=config["benchmarkset"]["bed"],
+        strat=config["stratifications"]["tsv"],
+        ref=rules.get_ref.output
+    output: outdir + "{prefix}_" + config["benchmarkset"]["id"] + "_results.vcf.gz"
+    params:
+        prefix=outdir + "{prefix}_" + config["benchmarkset"]["id"] +  "_results",
+        threads=12
+    shell: """
+        date
+        echo {input.ref}
+        echo {input.vcf}
+        VCF=$(basename {input.bench_vcf})
+        BED=$(basename {input.bench_bed})
+        BENCHDIR=$(dirname {input.bench_vcf})
+        STRAT=$(basename {input.strat})
+        STRATDIR=$(dirname {input.strat})
+
+        docker run -it \
+        -v $(pwd):/data \
+        -v $BENCHDIR:/bench_vcf_beds \
+        -v /$STRATDIR:/stratifications \
+        hap.py_docker:v0.3.12 /opt/hap.py/bin/hap.py \
+        /bench_vcf_beds/$VCF \
+        /data/{input.vcf} \
+        --target-regions /data/{input.bed} \
+        -f /bench_vcf_beds/$BED \
+        -o /data/{params.prefix} \
+        -r /data/{input.ref} \
+        --engine=vcfeval --engine-vcfeval-template hg38 \
+        --stratification /stratifications/$STRAT \
+        --threads {params.threads}
+        date
+    """
