@@ -6,8 +6,9 @@ Title of Dataset: HPRC Assembly Benchmarking with HG002 Assemblies
 
 Author Information (Name, Institution, Address, Email)
 
-	Principal Investigator: Justin Zook, NIST, jzook@nist.gov
-	Dataset Contact(s): Jennifer McDaniel, jmcdani@nist.gov
+Principal Investigator: Justin Zook, NIST, jzook@nist.gov
+Dataset Contact(s): Nate Olson, nolson@nist.gov
+                    Jennifer McDaniel, jmcdani@nist.gov
 
 --------------------------
 SUMMARY
@@ -18,9 +19,6 @@ genome assemblies using Dipcall for variant calling against GRCh38 and hap.py fo
 benchmarking against GIAB GRCh38 v4.1 benchmark using v2.0 stratifications.
 
 ![Benchmarking Summary](HPRC-Assembly-Benchmarking-Summary.png)
---------------------------
-SHARING/ACCESS INFORMATION
---------------------------
 
 --------------------
 DATA & FILE OVERVIEW
@@ -53,7 +51,7 @@ sample file for snakemake pipelines containing paths to assemblies : `samples_al
 METHODOLOGICAL INFORMATION
 --------------------------
 
-## GIAB-based Benchmarking Methods for HPRC Evaluation Paper
+### GIAB-based Benchmarking Methods for HPRC Evaluation Paper
 
 Using GIAB Benchmark Variants with GA4GH Stratifications to Evaluate Performance
 Small variant-based assembly benchmarking provides an orthogonal assembly evaluation method characterizing the base level accuracy of the assembly. Benchmarking tools from GIAB and GA4GH enable performance to be stratified by type of error (e.g., genotyping errors) and genome context (e.g., segmental duplications). Variants were first called using the dipcall assembly variant calling pipeline (https://github.com/lh3/dipcall, PMID:30013044). Briefly, dipcall first aligns an assembly to the GRCh38 reference genome (ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz) using minimap2 (https://github.com/lh3/minimap2, doi:10.1093/bioinformatics/bty191). We used optimized alignment parameters -z200000,10000 to improve alignment contiguity, as previously shown to improve variant recall in regions with dense variation like the Major Histocompatibility Complex (https://doi.org/10.1101/831792). Dipcall uses the resulting alignment to generate a bed file with haplotype coverage and call variants. All filtered variants except those with the GAP2 filter were removed. GAP2 filtered variants occurred particularly in primary-alternate assemblies in homozygous regions where the alternate contig was missing.  These GAP2 variants were kept as filtered to give separate performance metrics for them, and we treated them as homozygous variant by changing the genotype (GT) field from 1|. to 1|1. The resulting variant calls were benchmarked using hap.py v0.3.12 with the RTG Tools (v3.10.1) vcfeval comparison engine (https://github.com/Illumina/hap.py, https://doi.org/10.1038/s41587-019-0054-x). Note that earlier versions of hap.py and vcfeval will not output lenient regional variant matches to the FP.al field.  The hap.py comparison was performed with the V4.1 Genome In A Bottle HG002 small variant benchmark vcf and bed (ftp://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/release/AshkenazimTrio/HG002_NA24385_son/NISTv4.1/GRCh38/, https://doi.org/10.1101/2020.07.24.212712 ) and V2.0 of the GIAB genome stratifications (doi:10.18434/M32190). To improve reproducibility and transparency Snakemake (https://snakemake.readthedocs.io/en/stable/, https://doi.org/10.1093/bioinformatics/bts480) was used for pipeline construction and execution (github url?).  The extensive performance metrics output by hap.py in the extended.csv files were summarized in the following metrics for Completeness, Correctness, and Hard Regions.
