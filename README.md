@@ -4,13 +4,9 @@ GENERAL INFORMATION
 
 Title of Dataset: HPRC Assembly Benchmarking with HG002 Assemblies
 
-Author Information (Name, Institution, Address, Email)
-
 Principal Investigator: Justin Zook, NIST, jzook@nist.gov
 
-Dataset Contact(s): Nate Olson, nolson@nist.gov
-
-                    Jennifer McDaniel, jmcdani@nist.gov
+Dataset Contact(s): Nate Olson, nolson@nist.gov and Jennifer McDaniel, jmcdani@nist.gov
 
 --------------------------
 SUMMARY
