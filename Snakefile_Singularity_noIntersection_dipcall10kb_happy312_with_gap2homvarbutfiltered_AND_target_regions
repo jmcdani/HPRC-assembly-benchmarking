@@ -1,7 +1,12 @@
 ## Snakefile_Singularity_noIntersection_dipcall10kb_happy312_with_gap2homvarbutfiltered_AND_target_regions
-## Snakefile 1) DOES use singularity 2) DOES NOT do intersection of dip.vcf and dip.bed for input into hap.py 
-## 3) use of docker container hap.py_docker:v.0.3.12 4) Heng Li 10kb and Chai dipcall params
-## 5) use dip.gap2homvarbutfiltered.vcf.gz as hap.py input and target-regions = dip.bed
+## NOTES:
+## 1) Dipcall uses modified run-dipcall code propsed by Chai with LN40 replaced with the following, all other 
+##    parameters default:
+##    my $mm2_opt = q/-xasm5 -z200000,10000 --cs -r2k -t$(N_THREADS)/; 
+## 2) hap.py v0.3.12 w/ RTG tools v3.10.1
+##    -uses local docker container hap.py_docker:v0.3.12 built from hap.py v0.3.12 source code
+##    -hap.py input is modified dip.vcf --> dip.gap2homvarbutfiltered.vcf.gz as hap.py
+##    -target-regions = dip.bed
 
 ## Import dependencies
 import pandas as pd
