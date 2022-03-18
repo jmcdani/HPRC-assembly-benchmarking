@@ -1,3 +1,8 @@
+****************************************************
+**
+** All outputs from HPRC (hpp directory) have been moved to JM OWC_RAID1/Transfers_from_MacBook/assembly_benchmarking/hpp/
+**
+****************************************************
 -------------------
 GENERAL INFORMATION
 -------------------

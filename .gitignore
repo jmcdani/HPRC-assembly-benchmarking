@@ -1,0 +1,41 @@
+.DS_Store
+.Rhistory
+.snakemake/
+.vscode/
+HPRC-Assembly-Benchmarking-Snakemake-Runs.itmz
+HPRC-Assembly-Benchmarking-Snakemake-Runs.pdf
+HPRC-Assembly-Benchmarking-Summary of NIST.itmz
+HPRC-Assembly-Benchmarking-Summary of NIST.png
+REAMDE_2021_reanalysis
+assemblies/.DS_Store
+assemblies/AWS_CLI_downloads.sh
+assemblies/README
+benchmark/*
+dag.png
+docs/*
+genome-stratifications/*
+k8-0.2.4/*
+other_snakefiles/*
+output/*
+outputs_for_pipeline_runs/*
+python_scripts/*
+resources/*
+.ipynb_checkpoints/*
+src/.DS_Store
+rsync_commands4transfer2NAS.rtf
+scratch/
+summary_metrics_from_R/.DS_Store
+summary_metrics_from_R/.Rhistory
+summary_metrics_from_R/15vs15vs50_SNP.Recall.pdf
+summary_metrics_from_R/20211202_reanalysis/
+summary_metrics_from_R/Calculated Summary Metrics.txt
+summary_metrics_from_R/HPRC-Assembly-Benchmarking.R
+summary_metrics_from_R/asm19_9_9.05_benchmarking_params_comparison.csv
+summary_metrics_from_R/asm19_dipcall_25kb_vs_15kb.csv
+summary_metrics_from_R/asm19_dipcall_50kb_25kb_vs_15kb.csv
+summary_metrics_from_R/asm9-8-19_gap2homvar_vs_gap2homvarbutfiltered_10kb.csv
+summary_metrics_from_R/asm9_05ab_benchmarking_comparison.csv
+summary_metrics_from_R/dipcall10kb_happy312_with_gap2homvarbutfiltered.csv
+summary_metrics_from_R/ext_results_for_R/.DS_Store
+summary_metrics_from_R/ext_results_for_R/50kb/
+summary_metrics_from_R/hpp_benchmarking_metrics_withIntersection.csv
